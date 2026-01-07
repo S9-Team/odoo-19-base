@@ -1,0 +1,32 @@
+# Directorios de volúmenes de Odoo
+extra-addons/*
+!extra-addons/.gitkeep
+enterprise-addons/*
+!enterprise-addons/.gitkeep
+backups/*
+assets/*
+
+# Variables de entorno
+.env
+
+# Logs
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
