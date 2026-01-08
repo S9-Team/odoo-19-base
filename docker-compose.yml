@@ -22,8 +22,8 @@ services:
       - "8072:8072"
     volumes:
       - odoo-data:/var/lib/odoo
-      - ./assets:/var/lib/odoo/.local/share/Odoo/
-      - ./backups:/mnt/backups
+      - /root/odoo/assets:/var/lib/odoo/.local/share/Odoo/
+      - /root/odoo/backups:/mnt/backups
       - .env:/.env
     environment:
       - HOST=host.docker.internal
