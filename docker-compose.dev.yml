@@ -1,0 +1,42 @@
+services:
+  odoo:
+    build: 
+      context: .
+      args:
+        GIT_TOKEN: ${GIT_TOKEN}
+        GIT_REPOSITORY: ${GIT_REPOSITORY}
+        GIT_BRANCH: ${GIT_BRANCH}
+        DB_NAME: ${DB_NAME}
+        DB_USER: ${DB_USER}
+        DB_PASSWORD: ${DB_PASSWORD}
+        DB_HOST: ${DB_HOST}
+        DB_PORT: ${DB_PORT}
+        MASTER_PASSWORD: ${MASTER_PASSWORD}
+        LIST_DB: ${LIST_DB}
+        DB_FILTER: ${DB_FILTER}
+    container_name: odoo19
+    depends_on: []
+    ports:
+      - "8076:8069"
+      - "8077:8071"
+      - "8078:8072"
+    volumes:
+      - odoo-data:/var/lib/odoo
+      - ./assets:/var/lib/odoo/.local/share/Odoo/
+      - ./backups:/mnt/backups
+      - .env:/.env
+    environment:
+      - HOST=host.docker.internal
+      - PORT=5432
+      - USER=admin
+      - PASSWORD=admin
+      - DATABASE=odoo19
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    command: odoo --config=/etc/odoo/odoo.conf
+
+volumes:
+  odoo-data:
+    driver: local
+
