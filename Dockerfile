@@ -4,6 +4,7 @@ FROM odoo:19
 USER root
 
 ARG GIT_TOKEN
+ARG GIT_ENTERPRISE_TOKEN
 ARG GIT_REPOSITORY
 ARG GIT_BRANCH
 
@@ -26,7 +27,7 @@ RUN mkdir -p /mnt/extra-addons /mnt/enterprise-addons
 # Establecer permisos correctos
 RUN chown -R odoo:odoo /mnt/extra-addons /mnt/enterprise-addons
 
-RUN git clone https://$GIT_TOKEN@github.com/odoo/enterprise.git --depth 1 --single-branch 19.0
+RUN git clone https://$GIT_ENTERPRISE_TOKEN@github.com/odoo/enterprise.git --depth 1 --single-branch 19.0
 RUN mv 19.0/* /mnt/enterprise-addons/
 RUN git clone https://$GIT_TOKEN@github.com/$GIT_REPOSITORY.git -b $GIT_BRANCH /mnt/extra-addons/
 

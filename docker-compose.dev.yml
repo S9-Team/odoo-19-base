@@ -4,6 +4,7 @@ services:
       context: .
       args:
         GIT_TOKEN: ${GIT_TOKEN}
+        GIT_ENTERPRISE_TOKEN: ${GIT_ENTERPRISE_TOKEN}
         GIT_REPOSITORY: ${GIT_REPOSITORY}
         GIT_BRANCH: ${GIT_BRANCH}
         DB_NAME: ${DB_NAME}

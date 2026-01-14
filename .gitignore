@@ -5,6 +5,7 @@ enterprise-addons/*
 !enterprise-addons/.gitkeep
 backups/*
 assets/*
+odoo.conf
 
 # Variables de entorno
 .env
