@@ -631,6 +631,22 @@ To report issues or suggestions, contact the development team.
 
 ---
 
+## About
+
+**Developed by**: [Elevated Business Consulting](https://www.elevatedbusiness.consulting/)  
 **Version**: Odoo 19  
 **Last updated**: January 2026  
 **Maintained by**: S9 Team
+
+<div align="center">
+  
+### Elevated Business Consulting
+*Empowering your business through innovative solutions*
+
+**Website**: [www.elevatedbusiness.consulting](https://www.elevatedbusiness.consulting/)
+
+---
+
+© 2026 Elevated Business Consulting. All rights reserved.
+
+</div>
