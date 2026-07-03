@@ -18,9 +18,9 @@ services:
     container_name: odoo19
     depends_on: []
     ports:
-      - "8073:8069"
-      - "8074:8071"
-      - "8075:8072"
+      - "8076:8069"
+      - "8077:8071"
+      - "8078:8072"
     volumes:
       - odoo-data:/var/lib/odoo
       - /root/odoo/assets:/var/lib/odoo/.local/share/Odoo/
