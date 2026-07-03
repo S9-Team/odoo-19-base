@@ -19,8 +19,8 @@ services:
     depends_on: []
     ports:
       - "8079:8069"
-      - "8080:8071"
-      - "8081:8072"
+      - "8081:8071"
+      - "8082:8072"
     volumes:
       - odoo-data:/var/lib/odoo
       - /root/odoo/assets:/var/lib/odoo/.local/share/Odoo/
