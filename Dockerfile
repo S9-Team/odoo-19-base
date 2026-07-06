@@ -18,7 +18,7 @@ RUN apt update && \
     apt clean
 
 # Instalar python-dotenv para leer archivos .env
-RUN pip3 install --break-system-packages python-dotenv markdown2
+RUN pip3 install --break-system-packages python-dotenv markdown2 pycryptodome
 
 
 # Crear directorios para addons personalizados
