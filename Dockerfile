@@ -20,6 +20,8 @@ RUN apt update && \
 # Instalar python-dotenv para leer archivos .env
 RUN pip3 install --break-system-packages python-dotenv markdown2 pycryptodome
 
+# Dependencias del modulo mcp_server (external_dependencies en __manifest__.py)
+RUN pip3 install --break-system-packages "authlib>=1.6.12,<1.7.0" defusedxml packaging
 
 # Crear directorios para addons personalizados
 RUN mkdir -p /mnt/extra-addons /mnt/enterprise-addons
