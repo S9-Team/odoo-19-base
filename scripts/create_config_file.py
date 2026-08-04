@@ -15,6 +15,7 @@ class ConfigFile:
             "dbfilter": os.getenv("DB_FILTER", "odoo_*"),
             "addons_path": "/usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons,/mnt/enterprise-addons",
             "list_db": os.getenv("LIST_DB", True),
+            "proxy_mode": os.getenv("PROXY_MODE", True),
         }
 
     def create_config_file(self):
