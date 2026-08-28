@@ -16,6 +16,12 @@ class ConfigFile:
             "addons_path": "/usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons,/mnt/enterprise-addons",
             "list_db": os.getenv("LIST_DB", True),
             "proxy_mode": os.getenv("PROXY_MODE", True),
+            # Cron jobs (e.g. Teamwork sync/promote) can legitimately run
+            # longer than the default 120s HTTP request limit. Odoo only
+            # overrides the cron watchdog when this is truthy AND > 0 --
+            # 0/-1 fall back to limit_time_real (120s), they do NOT mean
+            # "unlimited" (see odoo/service/server.py: process_limit()).
+            "limit_time_real_cron": os.getenv("LIMIT_TIME_REAL_CRON", 3600),
         }
 
     def create_config_file(self):
