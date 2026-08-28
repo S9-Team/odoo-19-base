@@ -31,7 +31,7 @@ RUN chown -R odoo:odoo /mnt/extra-addons /mnt/enterprise-addons
 
 RUN git clone https://$GIT_ENTERPRISE_TOKEN@github.com/odoo/enterprise.git --depth 1 --single-branch 19.0
 RUN mv 19.0/* /mnt/enterprise-addons/
-##RUN git clone https://$GIT_TOKEN@github.com/$GIT_REPOSITORY.git -b $GIT_BRANCH /mnt/extra-addons/
+RUN git clone https://$GIT_TOKEN@github.com/$GIT_REPOSITORY.git -b $GIT_BRANCH /mnt/extra-addons/
 
 # Configurar Git safe directories para evitar errores de ownership
 RUN git config --global --add safe.directory /mnt/extra-addons && \
