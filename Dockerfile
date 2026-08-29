@@ -29,8 +29,18 @@ RUN mkdir -p /mnt/extra-addons /mnt/enterprise-addons
 # Establecer permisos correctos
 RUN chown -R odoo:odoo /mnt/extra-addons /mnt/enterprise-addons
 
-RUN git clone https://$GIT_ENTERPRISE_TOKEN@github.com/odoo/enterprise.git --depth 1 --single-branch 19.0
-RUN mv 19.0/* /mnt/enterprise-addons/
+# La imagen base odoo:19.0-<fecha> es una nightly de la comunidad. La rama 19.0 de
+# enterprise avanza mas rapido, y sus data files referencian xml ids que todavia no
+# existen en la comunidad empaquetada -> "Cannot update missing record".
+# Por eso se ancla enterprise al ultimo commit anterior a la fecha de la imagen base.
+ARG ENTERPRISE_CUTOFF=2026-08-18
+RUN git clone --branch 19.0 --single-branch --shallow-since=2026-06-01 \
+        https://$GIT_ENTERPRISE_TOKEN@github.com/odoo/enterprise.git /tmp/enterprise && \
+    cd /tmp/enterprise && \
+    git checkout --detach $(git rev-list -1 --before=$ENTERPRISE_CUTOFF HEAD) && \
+    rm -rf /tmp/enterprise/.git && \
+    cp -a /tmp/enterprise/. /mnt/enterprise-addons/ && \
+    rm -rf /tmp/enterprise
 RUN git clone https://$GIT_TOKEN@github.com/$GIT_REPOSITORY.git -b $GIT_BRANCH /mnt/extra-addons/
 
 # Configurar Git safe directories para evitar errores de ownership

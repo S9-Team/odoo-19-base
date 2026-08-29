@@ -13,15 +13,15 @@ class ConfigFile:
             "db_password": os.getenv("DB_PASSWORD", "postgres"),
             "db_name": os.getenv("DB_NAME", None),
             "dbfilter": os.getenv("DB_FILTER", "odoo_*"),
-            "addons_path": "/usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons,/mnt/enterprise-addons",
+            "addons_path": "/mnt/enterprise-addons,/usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons",
             "list_db": os.getenv("LIST_DB", True),
             "proxy_mode": os.getenv("PROXY_MODE", True),
-            # Cron jobs (e.g. Teamwork sync/promote) can legitimately run
-            # longer than the default 120s HTTP request limit. Odoo only
-            # overrides the cron watchdog when this is truthy AND > 0 --
-            # 0/-1 fall back to limit_time_real (120s), they do NOT mean
-            # "unlimited" (see odoo/service/server.py: process_limit()).
-            "limit_time_real_cron": os.getenv("LIMIT_TIME_REAL_CRON", 3600),
+            "limit_time_real": os.getenv("LIMIT_TIME_REAL", 1200),
+            "limit_request": os.getenv("LIMIT_REQUEST", 655360),
+            "limit_time_real_cron": os.getenv("LIMIT_TIME_REAL_CRON", -1),
+            "workers": os.getenv("WORKERS", 2),
+            "limit_time_worker_cron": os.getenv("LIMIT_TIME_WORKER_CRON", 0),
+            "limit_time_cpu": os.getenv("LIMIT_TIME_CPU", 600)
         }
 
     def create_config_file(self):
