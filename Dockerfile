@@ -33,11 +33,12 @@ RUN chown -R odoo:odoo /mnt/extra-addons /mnt/enterprise-addons
 # enterprise avanza mas rapido, y sus data files referencian xml ids que todavia no
 # existen en la comunidad empaquetada -> "Cannot update missing record".
 # Por eso se ancla enterprise al ultimo commit anterior a la fecha de la imagen base.
-ARG ENTERPRISE_CUTOFF=2026-08-18
-RUN git clone --branch 19.0 --single-branch --shallow-since=2026-06-01 \
-        https://$GIT_ENTERPRISE_TOKEN@github.com/odoo/enterprise.git /tmp/enterprise && \
-    cd /tmp/enterprise && \
-    git checkout --detach $(git rev-list -1 --before=$ENTERPRISE_CUTOFF HEAD) && \
+ARG ENTERPRISE_COMMIT=45ea6f73f095b73f2d7ae9c13645672fbfaae704
+RUN mkdir -p /tmp/enterprise && cd /tmp/enterprise && \
+    git init -q && \
+    git remote add origin https://$GIT_ENTERPRISE_TOKEN@github.com/odoo/enterprise.git && \
+    git fetch --depth 1 origin $ENTERPRISE_COMMIT && \
+    git checkout --detach FETCH_HEAD && \
     rm -rf /tmp/enterprise/.git && \
     cp -a /tmp/enterprise/. /mnt/enterprise-addons/ && \
     rm -rf /tmp/enterprise
