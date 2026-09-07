@@ -55,6 +55,7 @@ services:
       - traefik.http.routers.odoo-ws.priority=10
       - traefik.http.routers.odoo-ws.service=odoo-ws
       - traefik.http.services.odoo-ws.loadbalancer.server.port=8072
+      - traefik.http.routers.odoo-ws.priority=1000
 
 volumes:
   odoo-data:
