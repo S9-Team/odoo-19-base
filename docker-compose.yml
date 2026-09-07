@@ -36,6 +36,26 @@ services:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
     command: odoo --config=/etc/odoo/odoo.conf
+    labels:
+      - traefik.enable=true
+
+      # Router normal -> puerto 8069 (HTTP)
+      - traefik.http.routers.odoo-http.rule=Host(`evolvestage.ebc-cloud.com`)
+      - traefik.http.routers.odoo-http.entrypoints=https
+      - traefik.http.routers.odoo-http.tls=true
+      - traefik.http.routers.odoo-http.tls.certresolver=letsencrypt
+      - traefik.http.routers.odoo-http.service=odoo-http
+      - traefik.http.services.odoo-http.loadbalancer.server.port=8069
+
+      # Router websocket -> puerto 8072 (mayor prioridad, debe matchear primero)
+      - traefik.http.routers.odoo-ws.rule=Host(`evolvestage.ebc-cloud.com`) && PathPrefix(`/websocket`)
+      - traefik.http.routers.odoo-ws.entrypoints=https
+      - traefik.http.routers.odoo-ws.tls=true
+      - traefik.http.routers.odoo-ws.tls.certresolver=letsencrypt
+      - traefik.http.routers.odoo-ws.priority=10
+      - traefik.http.routers.odoo-ws.service=odoo-ws
+      - traefik.http.services.odoo-ws.loadbalancer.server.port=8072
+      - traefik.http.routers.odoo-ws.priority=1000
 
 volumes:
   odoo-data:
