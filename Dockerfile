@@ -34,15 +34,19 @@ RUN chown -R odoo:odoo /mnt/extra-addons /mnt/enterprise-addons
 # existen en la comunidad empaquetada -> "Cannot update missing record".
 # Por eso se ancla enterprise al ultimo commit anterior a la fecha de la imagen base.
 ARG ENTERPRISE_COMMIT=45ea6f73f095b73f2d7ae9c13645672fbfaae704
-RUN mkdir -p /tmp/enterprise && cd /tmp/enterprise && \
+RUN mkdir -p /tmp/enterprise && \
+    cd /tmp/enterprise && \
     git init -q && \
-    git remote add origin https://$GIT_ENTERPRISE_TOKEN@github.com/odoo/enterprise.git && \
-    git fetch --depth 1 origin $ENTERPRISE_COMMIT && \
+    git remote add origin "https://x-access-token:${GIT_ENTERPRISE_TOKEN}@github.com/odoo/enterprise.git" && \
+    git fetch --depth 1 origin "${ENTERPRISE_COMMIT}" && \
     git checkout --detach FETCH_HEAD && \
     rm -rf /tmp/enterprise/.git && \
     cp -a /tmp/enterprise/. /mnt/enterprise-addons/ && \
     rm -rf /tmp/enterprise
-RUN git clone https://$GIT_TOKEN@github.com/$GIT_REPOSITORY.git -b $GIT_BRANCH /mnt/extra-addons/
+RUN git clone \
+    --branch "${GIT_BRANCH}" \
+    "https://x-access-token:${GIT_TOKEN}@github.com/${GIT_REPOSITORY}.git" \
+    /mnt/extra-addons/
 
 # Configurar Git safe directories para evitar errores de ownership
 RUN git config --global --add safe.directory /mnt/extra-addons && \
